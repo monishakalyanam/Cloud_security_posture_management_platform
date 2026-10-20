@@ -1,0 +1,19 @@
+{
+  "metadata": { "name": "Deliberately broken file for the validation demo" },
+  "storageBuckets": [
+    { "id": "bkt-1", "name": "broken-bucket", "publicAccess": "yes", "loggingEnabled": true }
+  ],
+  "securityGroups": [
+    {
+      "id": "sg-1",
+      "name": "broken-sg",
+      "inboundRules": [
+        { "protocol": "tcp", "fromPort": 22, "toPort": 70000, "ipv4Cidrs": ["999.0.0.0/0"] }
+      ]
+    }
+  ],
+  "iamUsers": [
+    { "id": "bkt-1", "userName": "duplicate-id-user", "consoleAccess": true }
+  ],
+  "databses": []
+}

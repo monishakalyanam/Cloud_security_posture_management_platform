@@ -1,0 +1,34 @@
+{
+  "metadata": { "name": "Well-configured demo environment" },
+  "storageBuckets": [
+    { "id": "bkt-app-data", "name": "demo-app-data", "publicAccess": false, "encryptionEnabled": true, "loggingEnabled": true },
+    { "id": "bkt-backups", "name": "demo-backups", "publicAccess": false, "encryptionEnabled": true, "loggingEnabled": true }
+  ],
+  "securityGroups": [
+    {
+      "id": "sg-web",
+      "name": "web-servers",
+      "inboundRules": [
+        { "protocol": "tcp", "fromPort": 443, "toPort": 443, "ipv4Cidrs": ["0.0.0.0/0"], "ipv6Cidrs": ["::/0"] },
+        { "protocol": "tcp", "fromPort": 22, "toPort": 22, "ipv4Cidrs": ["10.0.0.0/8"], "ipv6Cidrs": [] }
+      ]
+    }
+  ],
+  "iamUsers": [
+    { "id": "usr-alice", "userName": "alice", "consoleAccess": true, "mfaEnabled": true },
+    { "id": "usr-backup-bot", "userName": "backup-bot", "consoleAccess": false }
+  ],
+  "iamPolicies": [
+    {
+      "id": "pol-read-reports",
+      "name": "ReadReportsOnly",
+      "statements": [
+        { "effect": "Allow", "actions": ["s3:GetObject"], "resources": ["arn:aws:s3:::demo-app-data/reports/*"] }
+      ]
+    }
+  ],
+  "databases": [
+    { "id": "db-orders", "name": "orders-db", "engine": "postgres", "publiclyAccessible": false, "encryptionEnabled": true, "backupEnabled": true },
+    { "id": "db-analytics", "name": "analytics-db", "engine": "mysql", "publiclyAccessible": false, "encryptionEnabled": true, "backupEnabled": true }
+  ]
+}

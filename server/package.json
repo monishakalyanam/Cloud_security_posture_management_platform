@@ -1,0 +1,25 @@
+{
+  "name": "cspm-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Backend for the Cloud Security Posture Management student project",
+  "type": "module",
+  "main": "src/index.js",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "node --test tests/rules.test.js tests/validator.test.js tests/score.test.js tests/csv.test.js",
+    "test:api": "node tests/api.integration.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.0",
+    "pdfkit": "^0.15.2"
+  }
+}

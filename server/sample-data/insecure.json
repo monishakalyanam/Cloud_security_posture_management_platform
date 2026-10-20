@@ -1,0 +1,55 @@
+{
+  "metadata": { "name": "Misconfigured demo environment" },
+  "storageBuckets": [
+    { "id": "bkt-public-assets", "name": "demo-public-assets", "publicAccess": true, "encryptionEnabled": false, "loggingEnabled": false },
+    { "id": "bkt-private-logs", "name": "demo-private-logs", "publicAccess": false, "encryptionEnabled": true, "loggingEnabled": false },
+    { "id": "bkt-secure", "name": "demo-secure-data", "publicAccess": false, "encryptionEnabled": true, "loggingEnabled": true }
+  ],
+  "securityGroups": [
+    {
+      "id": "sg-web-open-ssh",
+      "name": "web-open-ssh",
+      "inboundRules": [
+        { "protocol": "tcp", "fromPort": 22, "toPort": 22, "ipv4Cidrs": ["0.0.0.0/0"], "ipv6Cidrs": [] },
+        { "protocol": "tcp", "fromPort": 443, "toPort": 443, "ipv4Cidrs": ["0.0.0.0/0"], "ipv6Cidrs": ["::/0"] }
+      ]
+    },
+    {
+      "id": "sg-windows-open-rdp",
+      "name": "windows-open-rdp",
+      "inboundRules": [
+        { "protocol": "tcp", "fromPort": 3389, "toPort": 3389, "ipv4Cidrs": ["10.0.0.0/16"], "ipv6Cidrs": ["::/0"] }
+      ]
+    },
+    {
+      "id": "sg-allow-all",
+      "name": "allow-all-traffic",
+      "inboundRules": [
+        { "protocol": "-1", "ipv4Cidrs": ["0.0.0.0/0"], "ipv6Cidrs": [] }
+      ]
+    }
+  ],
+  "iamUsers": [
+    { "id": "usr-jane", "userName": "admin-jane", "consoleAccess": true, "mfaEnabled": false },
+    { "id": "usr-ravi", "userName": "dev-ravi", "consoleAccess": true, "mfaEnabled": true },
+    { "id": "usr-ci-bot", "userName": "ci-bot", "consoleAccess": false }
+  ],
+  "iamPolicies": [
+    {
+      "id": "pol-admin-everything",
+      "name": "AdminEverything",
+      "statements": [{ "effect": "Allow", "actions": ["*"], "resources": ["*"] }]
+    },
+    {
+      "id": "pol-read-reports",
+      "name": "ReadReportsOnly",
+      "statements": [
+        { "effect": "Allow", "actions": ["s3:GetObject"], "resources": ["arn:aws:s3:::demo-secure-data/reports/*"] }
+      ]
+    }
+  ],
+  "databases": [
+    { "id": "db-orders", "name": "orders-db", "engine": "postgres", "publiclyAccessible": true, "encryptionEnabled": false, "backupEnabled": false },
+    { "id": "db-analytics", "name": "analytics-db", "engine": "mysql", "publiclyAccessible": false, "encryptionEnabled": true, "backupEnabled": false }
+  ]
+}
